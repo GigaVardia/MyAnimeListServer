@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+const verifyTokenMiddleware = require("./middleware/verify-token.middleware");
+
 const authRoute = require("./routes/auth");
 const animeRoute = require("./routes/anime");
 const userRoute = require("./routes/user");
@@ -21,8 +23,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use(`/api/${API_VERSION}/auth`, authRoute);
-app.use(`/api/${API_VERSION}/anime`, animeRoute);
-app.use(`/api/${API_VERSION}/users`, userRoute);
+app.use(`/api/${API_VERSION}/anime`, verifyTokenMiddleware, animeRoute);
+app.use(`/api/${API_VERSION}/users`, verifyTokenMiddleware, userRoute);
 
 app.listen(3000, () => {
   console.log("Server running on port", 3000);

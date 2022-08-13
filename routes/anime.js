@@ -3,7 +3,6 @@ const StatusCodes = require("http-status-codes").StatusCodes;
 const Anime = require("../model/Anime");
 
 const Joi = require("joi");
-const verifyTokenMiddleware = require("../middleware/verify-token.middleware");
 
 const schema = Joi.object({
   title: Joi.string().max(255).required(),
@@ -12,7 +11,7 @@ const schema = Joi.object({
   episodes: Joi.number().max(9999),
 });
 
-router.post("/", verifyTokenMiddleware, async (req, res) => {
+router.post("/", async (req, res) => {
   const anime = new Anime({
     title: req.body.title,
     description: req.body.description || null,
@@ -30,7 +29,7 @@ router.post("/", verifyTokenMiddleware, async (req, res) => {
   }
 });
 
-router.get("/", verifyTokenMiddleware, async (req, res) => {
+router.get("/", async (req, res) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 25;
 

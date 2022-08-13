@@ -2,9 +2,7 @@ const router = require("express").Router();
 const StatusCodes = require("http-status-codes").StatusCodes;
 const User = require("../model/User");
 
-const verifyTokenMiddleware = require("../middleware/verify-token.middleware");
-
-router.get("/:id", verifyTokenMiddleware, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(String(req.params.id))?.select(
       "-password -__v"

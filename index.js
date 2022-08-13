@@ -13,6 +13,7 @@ const userRoute = require("./routes/user");
 require("dotenv").config();
 
 const API_VERSION = process.env.API_VERSION;
+const PORT = process.env.PORT || 3000;
 
 // connect db
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, () => {
@@ -26,6 +27,6 @@ app.use(`/api/${API_VERSION}/auth`, authRoute);
 app.use(`/api/${API_VERSION}/anime`, verifyTokenMiddleware, animeRoute);
 app.use(`/api/${API_VERSION}/users`, verifyTokenMiddleware, userRoute);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("Server running on port", 3000);
 });
